@@ -1,0 +1,44 @@
+version: '3.6'
+
+services:
+  db:
+    image: "postgres:10-alpine"
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_PASSWORD: bottomsecret
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+  redis:
+    image: "redis:4-alpine"
+    volumes:
+      - redis_data:/data
+    ports:
+      - "6379:6379"
+  worker:
+    build: .
+    command: celery worker --app django_rocket --loglevel info --logfile celery-worker.log
+    volumes:
+      - .:/code
+    depends_on:
+      - redis
+  schedule:
+    build: .
+    command: celery beat --app django_rocket --loglevel info --logfile celery-beat.log
+    volumes:
+      - .:/code
+    depends_on:
+      - redis
+  web:
+    build: .
+    command: bash -c "python manage.py migrate --noinput && python manage.py runserver 0.0.0.0:8000"
+    volumes:
+      - .:/code
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+      - redis
+volumes:
+  postgres_data:
+  redis_data:

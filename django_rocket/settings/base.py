@@ -81,10 +81,10 @@ WSGI_APPLICATION = 'django_rocket.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'django-rocket-db',
-        'USER': 'django-rocket-user',
+        'NAME': 'postgres',
+        'USER': 'postgres',
         'PASSWORD': 'bottomsecret',
-        'HOST': '127.0.0.1',
+        'HOST': 'db',
         'PORT': '5432',
     }
 }
@@ -129,8 +129,8 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 # Celery task queue configs
-CELERY_BROKER_URL = 'redis://localhost:6379/0'
-CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
+CELERY_BROKER_URL = 'redis://redis:6379/0'
+CELERY_RESULT_BACKEND = 'redis://redis:6379/0'
 CELERY_BEAT_SCHEDULE = {
     # Only for demo (run every minute), should remove in production
     'demo-scheduled-task': {
