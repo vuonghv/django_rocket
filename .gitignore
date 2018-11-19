@@ -111,3 +111,7 @@ venv.bak/
 
 # VIM
 *.swp
+
+# Celery
+celerybeat-schedule.db
+celerybeat.pid

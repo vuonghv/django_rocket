@@ -2,6 +2,10 @@
 
 This is a Django structure project that was collected from my work experience. You can use this repo as a start point for your newly Django project.
 
+## Note
+1. Current Celery 4.2.1 **ONLY SUPPORT Python (2.7, 3.4, 3.5, 3.6)**, **DO NOT** use Python 3.7 because of this [async keyword issue](https://github.com/celery/celery/issues/4500)
+2. **ONLY USE** `redis==2.10.6` because of this [float issue](https://github.com/celery/celery/issues/5175) on redis 3.0.0
+
 ## What does it support?
 
 1. All project apps are moved into `apps` folder for good structure
